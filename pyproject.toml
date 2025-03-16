@@ -1,0 +1,56 @@
+[project]
+name = "Summarizer"
+version = "0.0.0"
+description = "Summarizer for Telegram chats"
+authors = []
+readme = "README.md"
+requires-python = ">=3.12,<3.14"
+dynamic = [ "dependencies" ]
+
+[tool.poetry.dependencies]
+alembic = "*"
+databases = {extras = ["aiosqlite"], version = "*"}
+google-genai = "*"
+psycopg2-binary = "*"
+pydantic-settings = "*"
+python-telegram-bot = "*"
+
+[tool.poetry.group.dev.dependencies]
+mypy = "*"
+pylint = "*"
+pytest = "*"
+pytest-asyncio = "*"
+pytest-cov = "*"
+pytest-env = "*"
+respx = "*"
+ruff = "*"
+
+[build-system]
+requires = ["poetry-core>=2.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.pylint.messages_control]
+max-line-length = 120
+disable = [
+    "fixme",
+    "missing-class-docstring",
+    "missing-function-docstring",
+    "missing-module-docstring",
+    "too-many-arguments",
+    "too-many-positional-arguments",
+    "too-few-public-methods",
+]
+
+[tool.pytest.ini_options]
+addopts = "-ra --quiet --cov-report=term-missing --cov=."
+asyncio_default_fixture_loop_scope = "function"
+testpaths = [
+    "tests",
+]
+
+[tool.mypy]
+plugins = [
+    "pydantic.mypy"
+]
+
+[tool.pytest_env]
