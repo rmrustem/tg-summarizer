@@ -7,6 +7,8 @@ class Settings(BaseSettings):
     chats_whitelist: list[int] = []
     gemini_key: str = ""
     tg_bot_key: str = ""
+    summary_period: int = 24
+    daily_hour: int = 22
 
     db_user: str = ""
     db_password: str = ""

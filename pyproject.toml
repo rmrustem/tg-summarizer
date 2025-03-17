@@ -13,7 +13,7 @@ databases = {extras = ["aiosqlite"], version = "*"}
 google-genai = "*"
 psycopg2-binary = "*"
 pydantic-settings = "*"
-python-telegram-bot = "*"
+python-telegram-bot = {extras = ["job-queue"], version = "*"}
 
 [tool.poetry.group.dev.dependencies]
 mypy = "*"

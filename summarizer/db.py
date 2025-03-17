@@ -18,7 +18,7 @@ def set_database_path() -> URL:
         )
     if settings.db_test:
         return URL.create("sqlite", database="tests.db")
-    return URL.create("sqlite", database="local.db")
+    return URL.create("sqlite", database="data/local.db")
 
 
 engine = create_engine(
