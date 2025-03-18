@@ -75,7 +75,7 @@ async def summarize(messages: list[Message], chat_id: int) -> str:
     text = "\n".join(
         [f"{msg.message_id} {msg.user}: {msg.text}" for msg in messages if msg.text]
     )
-    prompt = f"""Напиши краткое резюме (без вводной части) этих сообщений из Telegram чата (номер чата "{chat_id}") в виде связанного текста вида "Обсудили это, узнали новость такую-то, Вася сделал то-то". Отдельные ключевые слова должны быть оформлены как ссылки (в формате html) на сообщения. Текст сообщений: \n\n"""  # pylint:disable=line-too-long
+    prompt = f"""Напиши краткое резюме (без вводной части) этих сообщений из Telegram чата (номер чата "{chat_id}") в виде связанного текста вида "Обсудили это, узнали новость такую-то, Вася рассказал то-то". Ключевые слова сообщений должны быть оформлены как ссылки (в формате html) на сообщения. Сообщения на одну тему должны быть сгруппированы, независимо от порядка их обсуждения. В самом начале вставь 2 emoji в тему сообщений. Текст сообщений: \n\n"""  # pylint:disable=line-too-long
     response = client.models.generate_content(model=model, contents=prompt + text)
     return str(response.text)
 
@@ -94,7 +94,7 @@ async def post_summary(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
 async def collect_post_summary(chat_id: int, hours: int) -> None:
     hours = clamp(hours)
     messages = await get_messages(chat_id, hours)
-    intro = f"⚡️<b>Дайджест за последние {hours_rus(hours)}</b> 🗞\n"
+    intro = f"⚡️<b>#Дайджест за последние {hours_rus(hours)}</b> 🗞\n"
     summary = await summarize(messages, chat_id)
     bot = Bot(token=settings.tg_bot_key)
     await bot.send_message(chat_id=chat_id, text=intro + summary, parse_mode="HTML")
